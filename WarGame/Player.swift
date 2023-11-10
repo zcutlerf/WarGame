@@ -9,22 +9,20 @@ import Foundation
 
 /// A player playing War, with their stack/hand/pile of cards.
 struct Player {
+    var number: Int
+    
     /// The player's current stack/hand/pile of cards.
     var cards: [Card]
     
     /// Creates a new player, taking in the cards that are dealt to them before the game begins.
-    init(unturnedCards: [Card]) {
+    init(_ number: Int, unturnedCards: [Card]) {
+        self.number = number
         self.cards = unturnedCards
     }
     
     /// The score the player has, formatted for printing to the console with even character widths.
-    var score: String {
-        let score = cards.count
-        if score < 10 {
-            return "\(score) "
-        } else {
-            return "\(score)"
-        }
+    var score: Int {
+        cards.count
     }
     
     /// Whether the player has run out of cards and loses.

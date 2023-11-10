@@ -21,7 +21,6 @@ struct Deck {
         }
         
         shuffle()
-//        stackTheDeck()
     }
     
     /// Shuffles the cards in place.
@@ -29,21 +28,14 @@ struct Deck {
         cards.shuffle()
     }
     
-    /// Rather than shuffling the cards, we might prefer to stack the deck, to ensure one player's success.
-    private mutating func stackTheDeck() {
-        let firstHalf = cards.filter { $0.suit == .spades || $0.suit == .clubs }
-        let secondHalf = cards.filter { $0.suit == .hearts || $0.suit == .diamonds }
-        self.cards = firstHalf + secondHalf
-        self.cards.removeLast(3)
-        self.cards.append(Card(value: .five, suit: .spades))
-        self.cards.append(Card(value: .six, suit: .hearts))
-        self.cards.append(Card(value: .seven, suit: .clubs))
-    }
-    
-    /// Divides the deck in half, returning two arrays of cards to give to the players.
-    func divide() -> (firstPlayersCards: [Card], secondPlayersCards: [Card]) {
-        let firstHalf = cards[0..<(cards.count / 2)]
-        let secondHalf = cards[(cards.count / 2)..<cards.count]
-        return (Array(firstHalf), Array(secondHalf))
+    /// Divides the deck into hands based on the number of players.
+    func dealTo(_ numberOfPlayers: Int) -> [[Card]] {
+        let cardsPerPlayer = cards.count / numberOfPlayers
+        
+        return (0..<numberOfPlayers).map { index in
+            let start = cardsPerPlayer * index
+            let end = cardsPerPlayer * (index + 1)
+            return Array(cards[start..<end])
+        }
     }
 }

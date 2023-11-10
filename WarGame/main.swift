@@ -10,15 +10,16 @@ import Foundation
 // Make a deck of shuffled cards
 let deck = Deck()
 
-// Deal the cards by dividing the deck in half
-let dividedCards = deck.divide()
+// Deal the cards by dealing to a certain number of players
+let dividedCards = deck.dealTo(10)
 
-// Make two players and give them their cards
-var player1 = Player(unturnedCards: dividedCards.firstPlayersCards)
-var player2 = Player(unturnedCards: dividedCards.secondPlayersCards)
+// Make players and give them their cards
+var players = dividedCards.indices.map { index in
+    Player(index + 1, unturnedCards: dividedCards[index])
+}
 
 // Make a War game to represent game state
-var war = War(player1: player1, player2: player2)
+var war = War(players: players)
 
 // Play the War game
 war.playGame()

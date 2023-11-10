@@ -20,7 +20,12 @@ class War {
     /// Plays a game of war.
     func playGame() {
         while players.filter({ $0.score != 0 }).count != 1 {
-            playRound()
+            do {
+                try playRound()
+            } catch {
+                print("~~~THERE WAS A DRAW~~~")
+                break
+            }
         }
         
         if let winningPlayer = players.filter({ $0.score != 0 }).first {
@@ -35,7 +40,7 @@ class War {
     /// This function is recursive if the played cards are the same.
     ///
     /// - Throws: If one player runs out of cards, the function will throw.
-    func playRound(with cardsOnTable: [Card] = []) {
+    func playRound(with cardsOnTable: [Card] = []) throws {
         var newCardsOnTable = cardsOnTable
         
         if !cardsOnTable.isEmpty {
@@ -48,7 +53,7 @@ class War {
         newCardsOnTable += newCards.compactMap { $0 }
         
         guard let maxValueOnTable = newCards.compactMap({$0}).sorted(by: { $0 > $1 }).first else {
-            fatalError("How is it possible we are here, with no maximum value?")
+            throw GameplayError.noMaximumValueOnTable
         }
         let allCardsSatisfyingMax = newCards.compactMap({$0}).filter { $0 == maxValueOnTable }
         
@@ -57,7 +62,7 @@ class War {
             players[winningPlayerIndex].collect(newCardsOnTable)
             printScore()
         } else {
-            playRound(with: newCardsOnTable)
+            try playRound(with: newCardsOnTable)
         }
     }
     
@@ -104,5 +109,9 @@ class War {
         }
         print()
         print()
+    }
+    
+    enum GameplayError: Error {
+        case noMaximumValueOnTable
     }
 }

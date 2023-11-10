@@ -30,12 +30,11 @@ struct Deck {
     
     /// Divides the deck into hands based on the number of players.
     func dealTo(_ numberOfPlayers: Int) -> [[Card]] {
-        let cardsPerPlayer = cards.count / numberOfPlayers
-        
-        return (0..<numberOfPlayers).map { index in
-            let start = cardsPerPlayer * index
-            let end = cardsPerPlayer * (index + 1)
-            return Array(cards[start..<end])
+        var hands = Array(repeating: Array<Card>(), count: numberOfPlayers)
+        for index in 0..<cards.count {
+            let card = cards[index]
+            hands[index % numberOfPlayers].append(card)
         }
+        return hands
     }
 }

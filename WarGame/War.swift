@@ -19,17 +19,14 @@ class War {
     
     /// Plays a game of war.
     func playGame() {
-        while players.allSatisfy({ $0.cards.count != 0 }) {
-            do {
-                try playRound()
-            } catch {
-                break
-            }
+        while players.filter({ $0.score != 0 }).count != 1 {
+            playRound()
         }
         
-        let playersWhoLost = players.filter({ $0.score == 0 })
-        for player in playersWhoLost {
-            print("~~~PLAYER \(player.number) LOST~~~")
+        if let winningPlayer = players.filter({ $0.score != 0 }).first {
+            print("~~~PLAYER \(winningPlayer.number) WON~~~")
+        } else {
+            print("There was no winner for some reason.")
         }
     }
     
@@ -38,36 +35,36 @@ class War {
     /// This function is recursive if the played cards are the same.
     ///
     /// - Throws: If one player runs out of cards, the function will throw.
-    func playRound(with cardsOnTable: [Card] = []) throws {
+    func playRound(with cardsOnTable: [Card] = []) {
         var newCardsOnTable = cardsOnTable
         
         if !cardsOnTable.isEmpty {
-            let hiddenCards = try playCards(isHidden: true)
-            newCardsOnTable += hiddenCards
+            let hiddenCards = playCards(isHidden: true)
+            newCardsOnTable += hiddenCards.compactMap { $0 }
         }
         
-        let newCards = try playCards()
+        let newCards = playCards()
         
-        newCardsOnTable += newCards
+        newCardsOnTable += newCards.compactMap { $0 }
         
-        guard let maxValueOnTable = newCards.sorted(by: { $0 > $1 }).first else {
-            fatalError("idk what happens here")
+        guard let maxValueOnTable = newCards.compactMap({$0}).sorted(by: { $0 > $1 }).first else {
+            fatalError("How is it possible we are here, with no maximum value?")
         }
-        let allCardsSatisfyingMax = newCards.filter { $0 == maxValueOnTable }
+        let allCardsSatisfyingMax = newCards.compactMap({$0}).filter { $0 == maxValueOnTable }
         
         if allCardsSatisfyingMax.count == 1 {
-            let winningPlayerIndex = newCards.firstIndex(where: { $0.description == allCardsSatisfyingMax.first!.description })!
+            let winningPlayerIndex = newCards.firstIndex(where: { $0?.description == allCardsSatisfyingMax.first!.description })!
             players[winningPlayerIndex].collect(newCardsOnTable)
             printScore()
         } else {
-            try playRound(with: newCardsOnTable)
+            playRound(with: newCardsOnTable)
         }
     }
     
     /// Attempts to play a card from each player's hand, and print out the results.
-    func playCards(isHidden: Bool = false) throws -> [Card] {
-        let playedCards = try players.indices.map { playerIndex in
-            try players[playerIndex].play()
+    func playCards(isHidden: Bool = false) -> [Card?] {
+        let playedCards = players.indices.map { playerIndex in
+            try? players[playerIndex].play()
         }
         
         printCardPlay(playedCards, isHidden: isHidden)
@@ -75,21 +72,21 @@ class War {
     }
     
     /// Prints cards to the console in a human-readable format.
-    func printCardPlay(_ cards: [Card], isHidden: Bool = false) {
+    func printCardPlay(_ cards: [Card?], isHidden: Bool = false) {
         if isHidden {
             for (index, card) in cards.enumerated() {
                 if (index % 2) == 0 {
-                    print("       \(index + 1) -> \(card.description)", terminator: " | ")
+                    print("       \(index + 1) -> \(card?.description ?? "__")", terminator: " | ")
                 } else {
-                    print("\(card.description) <- \(index + 1)")
+                    print("\(card?.description ?? "__") <- \(index + 1)")
                 }
             }
         } else {
             for (index, card) in cards.enumerated() {
                 if (index % 2) == 0 {
-                    print("Player \(index + 1) -> \(card.description)", terminator: " | ")
+                    print("Player \(index + 1) -> \(card?.description ?? "__")", terminator: " | ")
                 } else {
-                    print("\(card.description) <- Player \(index + 1)")
+                    print("\(card?.description ?? "__") <- Player \(index + 1)")
                 }
             }
         }

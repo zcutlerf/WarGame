@@ -11,7 +11,7 @@ import Foundation
 let deck = Deck()
 
 // Deal the cards by dealing to a certain number of players
-let dividedCards = deck.dealTo(10)
+let dividedCards = deck.dealTo(2)
 
 // Make players and give them their cards
 var players = dividedCards.indices.map { index in

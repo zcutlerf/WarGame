@@ -7,9 +7,13 @@
 
 import XCTest
 
-struct Card: Comparable {
+struct Card: Comparable, CustomStringConvertible {
     var value: Value
     var suit: Suit
+    
+    var description: String {
+        "\(value.description)\(suit.description)"
+    }
     
     static func < (lhs: Card, rhs: Card) -> Bool {
         lhs.value < rhs.value
@@ -20,7 +24,7 @@ struct Card: Comparable {
     }
 }
 
-enum Value: Int, Comparable {
+enum Value: Int, Comparable, CustomStringConvertible {
     case two = 2
     case three, four, five, six, seven, eight, nine, ten, jack, queen, king, ace
     
@@ -31,10 +35,54 @@ enum Value: Int, Comparable {
     static func == (lhs: Value, rhs: Value) -> Bool {
         lhs.rawValue == rhs.rawValue
     }
+    
+    var description: String {
+        switch self {
+        case .two:
+            "2"
+        case .three:
+            "3"
+        case .four:
+            "4"
+        case .five:
+            "5"
+        case .six:
+            "6"
+        case .seven:
+            "7"
+        case .eight:
+            "8"
+        case .nine:
+            "9"
+        case .ten:
+            "10"
+        case .jack:
+            "J"
+        case .queen:
+            "Q"
+        case .king:
+            "K"
+        case .ace:
+            "A"
+        }
+    }
 }
 
-enum Suit {
+enum Suit: String, CustomStringConvertible {
     case clubs, diamonds, hearts, spades
+    
+    var description: String {
+        switch self {
+        case .clubs:
+            "♣"
+        case .diamonds:
+            "♦"
+        case .hearts:
+            "♥"
+        case .spades:
+            "♠"
+        }
+    }
 }
 
 final class CardTests: XCTestCase {
@@ -50,5 +98,12 @@ final class CardTests: XCTestCase {
         let aceOfHearts = Card(value: .ace, suit: .hearts)
         
         XCTAssertEqual(aceOfSpades, aceOfHearts)
+    }
+    
+    func test_description_forKingOfSpades() throws {
+        let kingOfSpades = Card(value: .king, suit: .spades)
+        let description = kingOfSpades.description
+        
+        XCTAssertEqual(description, "K♠")
     }
 }

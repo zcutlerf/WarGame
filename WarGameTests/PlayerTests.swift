@@ -19,6 +19,10 @@ struct Player {
     var score: Int {
         hand.count
     }
+    
+    var hasLost: Bool {
+        score == 0
+    }
 }
 
 final class PlayerTests: XCTestCase {
@@ -36,5 +40,12 @@ final class PlayerTests: XCTestCase {
         let player = Player(1, with: hand)
         let score = player.score
         XCTAssertEqual(score, player.hand.count)
+    }
+    
+    func test_hasLost_falseAtInitialization() throws {
+        let deck = Deck()
+        let hand = deck.deal(to: 2).first!
+        let player = Player(1, with: hand)
+        XCTAssertFalse(player.hasLost)
     }
 }

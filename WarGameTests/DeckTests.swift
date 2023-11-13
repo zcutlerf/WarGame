@@ -42,4 +42,16 @@ final class DeckTests: XCTestCase {
             XCTAssertEqual(numberOfCardsWithSuit, 13)
         }
     }
+    
+    func test_init_allCardsAreUnique() throws {
+        let deck = Deck()
+        for suit in Suit.allCases {
+            for value in Value.allCases {
+                let numberOfCardsMatchingSuitAndValue = deck.cards.filter { card in
+                    card.value == value && card.suit == suit
+                }.count
+                XCTAssertEqual(numberOfCardsMatchingSuitAndValue, 1)
+            }
+        }
+    }
 }

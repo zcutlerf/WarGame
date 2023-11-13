@@ -15,7 +15,7 @@ struct Deck {
             return partialDeck + Suit.allCases.map { suit in
                 Card(value: value, suit: suit)
             }
-        }
+        }.shuffled()
     }
     
     func deal(to numberOfPlayers: Int) -> [[Card]] {
@@ -29,15 +29,19 @@ struct Deck {
 }
 
 final class DeckTests: XCTestCase {
+    var deck: Deck = Deck()
+    
+    override func setUp() {
+        deck = Deck()
+    }
+    
     func test_init_newlyCreatedDeckHas52Cards() throws {
-        let deck = Deck()
         let count = deck.cards.count
         
         XCTAssertEqual(count, 52)
     }
     
     func test_init_deckIncludes4OfEachValue() throws {
-        let deck = Deck()
         for value in Value.allCases {
             let numberOfCardsWithValue = deck.cards.filter { $0.value == value }.count
             XCTAssertEqual(numberOfCardsWithValue, 4)
@@ -45,7 +49,6 @@ final class DeckTests: XCTestCase {
     }
     
     func test_init_deckIncludes13OfEachSuit() throws {
-        let deck = Deck()
         for suit in Suit.allCases {
             let numberOfCardsWithSuit = deck.cards.filter { $0.suit == suit }.count
             XCTAssertEqual(numberOfCardsWithSuit, 13)
@@ -53,7 +56,6 @@ final class DeckTests: XCTestCase {
     }
     
     func test_init_allCardsAreUnique() throws {
-        let deck = Deck()
         for suit in Suit.allCases {
             for value in Value.allCases {
                 let numberOfCardsMatchingSuitAndValue = deck.cards.filter { card in
@@ -64,9 +66,13 @@ final class DeckTests: XCTestCase {
         }
     }
     
+    func test_init_deckShuffles() throws {
+        // Note: there is a 1 in 80 unvingintillion chance that this test will not pass, if the two decks shuffle exactly the same.
+        let anotherDeck = Deck()
+        XCTAssertNotEqual(deck.cards, anotherDeck.cards)
+    }
+    
     func test_deal_dealingTo2PlayersDividesDeckInHalf() throws {
-        let deck = Deck()
-        
         for numberOfPlayers in 2...5 {
             let hands = deck.deal(to: numberOfPlayers)
             

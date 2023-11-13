@@ -17,6 +17,15 @@ struct Deck {
             }
         }
     }
+    
+    func deal(to numberOfPlayers: Int) -> [[Card]] {
+        var hands = Array(repeating: Array<Card>(), count: numberOfPlayers)
+        for index in 0..<cards.count {
+            let card = cards[index]
+            hands[index % numberOfPlayers].append(card)
+        }
+        return hands
+    }
 }
 
 final class DeckTests: XCTestCase {
@@ -51,6 +60,20 @@ final class DeckTests: XCTestCase {
                     card.value == value && card.suit == suit
                 }.count
                 XCTAssertEqual(numberOfCardsMatchingSuitAndValue, 1)
+            }
+        }
+    }
+    
+    func test_deal_dealingTo2PlayersDividesDeckInHalf() throws {
+        let deck = Deck()
+        
+        for numberOfPlayers in 2...5 {
+            let hands = deck.deal(to: numberOfPlayers)
+            
+            let expectedNumberOfCardsPerHand = deck.cards.count / numberOfPlayers
+            
+            for hand in hands {
+                XCTAssert(hand.count == expectedNumberOfCardsPerHand || hand.count == expectedNumberOfCardsPerHand + 1)
             }
         }
     }

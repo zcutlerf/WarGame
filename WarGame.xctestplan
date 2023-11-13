@@ -1,0 +1,29 @@
+{
+  "configurations" : [
+    {
+      "id" : "973D4630-C2E9-4DA2-946B-5EA98E99CB58",
+      "name" : "Test Scheme Action",
+      "options" : {
+
+      }
+    }
+  ],
+  "defaultOptions" : {
+    "codeCoverage" : false,
+    "targetForVariableExpansion" : {
+      "containerPath" : "container:WarGame.xcodeproj",
+      "identifier" : "5D19976A2AFD173000C75FCD",
+      "name" : "WarGame"
+    }
+  },
+  "testTargets" : [
+    {
+      "target" : {
+        "containerPath" : "container:WarGame.xcodeproj",
+        "identifier" : "5D6F618E2B029D6B00207AEC",
+        "name" : "WarGameTests"
+      }
+    }
+  ],
+  "version" : 1
+}

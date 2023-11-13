@@ -24,7 +24,7 @@ struct Card: Comparable, CustomStringConvertible {
     }
 }
 
-enum Value: Int, Comparable, CustomStringConvertible {
+enum Value: Int, Comparable, CustomStringConvertible, CaseIterable {
     case two = 2
     case three, four, five, six, seven, eight, nine, ten, jack, queen, king, ace
     

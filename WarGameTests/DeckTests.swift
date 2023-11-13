@@ -11,7 +11,10 @@ struct Deck {
     var cards: [Card]
     
     init() {
-        self.cards = Array(repeating: Card(value: .ace, suit: .spades), count: 52)
+        self.cards = Value.allCases.reduce([]) { partialDeck, value in
+            let newCards = Array(repeating: Card(value: value, suit: .spades), count: 4)
+            return partialDeck + newCards
+        }
     }
 }
 
@@ -21,5 +24,13 @@ final class DeckTests: XCTestCase {
         let count = deck.cards.count
         
         XCTAssertEqual(count, 52)
+    }
+    
+    func test_init_deckIncludes4OfEachValue() throws {
+        let deck = Deck()
+        for value in Value.allCases {
+            let numberOfCardsWithValue = deck.cards.filter { $0.value == value }.count
+            XCTAssertEqual(numberOfCardsWithValue, 4)
+        }
     }
 }

@@ -72,7 +72,7 @@ final class DeckTests: XCTestCase {
         XCTAssertNotEqual(deck.cards, anotherDeck.cards)
     }
     
-    func test_deal_dealingTo2PlayersDividesDeckInHalf() throws {
+    func test_deal_dealingToPlayersYieldsEquivalentSizeHands() throws {
         for numberOfPlayers in 2...5 {
             let hands = deck.deal(to: numberOfPlayers)
             

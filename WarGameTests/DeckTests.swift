@@ -7,6 +7,19 @@
 
 import XCTest
 
-final class DeckTests: XCTestCase {
+struct Deck {
+    var cards: [Card]
     
+    init() {
+        self.cards = Array(repeating: Card(value: .ace, suit: .spades), count: 52)
+    }
+}
+
+final class DeckTests: XCTestCase {
+    func test_init_newlyCreatedDeckHas52Cards() throws {
+        let deck = Deck()
+        let count = deck.cards.count
+        
+        XCTAssertEqual(count, 52)
+    }
 }

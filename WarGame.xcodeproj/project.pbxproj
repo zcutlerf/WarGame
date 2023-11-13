@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		5D08446F2B02BB94007C5335 /* DeckTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D08446E2B02BB94007C5335 /* DeckTests.swift */; };
 		5D19976F2AFD173000C75FCD /* main.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D19976E2AFD173000C75FCD /* main.swift */; };
 		5D1997762AFD173D00C75FCD /* Suit.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D1997752AFD173D00C75FCD /* Suit.swift */; };
 		5D1997782AFD174600C75FCD /* Value.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D1997772AFD174600C75FCD /* Value.swift */; };
@@ -32,6 +33,7 @@
 
 /* Begin PBXFileReference section */
 		5D08446D2B02B8D1007C5335 /* WarGame.xctestplan */ = {isa = PBXFileReference; lastKnownFileType = text; path = WarGame.xctestplan; sourceTree = "<group>"; };
+		5D08446E2B02BB94007C5335 /* DeckTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeckTests.swift; sourceTree = "<group>"; };
 		5D19976B2AFD173000C75FCD /* WarGame */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = WarGame; sourceTree = BUILT_PRODUCTS_DIR; };
 		5D19976E2AFD173000C75FCD /* main.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = main.swift; sourceTree = "<group>"; };
 		5D1997752AFD173D00C75FCD /* Suit.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Suit.swift; sourceTree = "<group>"; };
@@ -101,6 +103,7 @@
 			children = (
 				5D6F61912B029D6B00207AEC /* WarGameTests.swift */,
 				5D6F61962B029F4C00207AEC /* CardTests.swift */,
+				5D08446E2B02BB94007C5335 /* DeckTests.swift */,
 			);
 			path = WarGameTests;
 			sourceTree = "<group>";
@@ -208,6 +211,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				5D08446F2B02BB94007C5335 /* DeckTests.swift in Sources */,
 				5D6F61922B029D6B00207AEC /* WarGameTests.swift in Sources */,
 				5D6F61972B029F4C00207AEC /* CardTests.swift in Sources */,
 			);

@@ -22,7 +22,7 @@ struct Card: Comparable {
 
 enum Value: Int, Comparable {
     case two = 2
-    case three, four, five, six, seven, eight, nine, ten, jack, king, queen, ace
+    case three, four, five, six, seven, eight, nine, ten, jack, queen, king, ace
     
     static func < (lhs: Value, rhs: Value) -> Bool {
         lhs.rawValue < rhs.rawValue

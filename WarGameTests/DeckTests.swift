@@ -83,4 +83,17 @@ final class DeckTests: XCTestCase {
             }
         }
     }
+    
+    func test_deal_doesNotCreateOrRemoveCards() throws {
+        let hands = deck.deal(to: 3)
+        
+        let recreatedDeck = hands.reduce([]) { partialDeck, hand in
+            partialDeck + hand
+        }
+        
+        let sortedDeck = deck.cards.sorted(by: <)
+        let sortedRecreatedDeck = recreatedDeck.sorted(by: <)
+        
+        XCTAssertEqual(sortedDeck, sortedRecreatedDeck)
+    }
 }

@@ -68,7 +68,7 @@ enum Value: Int, Comparable, CustomStringConvertible, CaseIterable {
     }
 }
 
-enum Suit: String, CustomStringConvertible {
+enum Suit: String, CustomStringConvertible, CaseIterable {
     case clubs, diamonds, hearts, spades
     
     var description: String {

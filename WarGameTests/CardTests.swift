@@ -14,6 +14,10 @@ struct Card: Comparable {
     static func < (lhs: Card, rhs: Card) -> Bool {
         lhs.value < rhs.value
     }
+    
+    static func == (lhs: Card, rhs: Card) -> Bool {
+        lhs.value == rhs.value
+    }
 }
 
 enum Value: Int, Comparable {
@@ -22,6 +26,10 @@ enum Value: Int, Comparable {
     
     static func < (lhs: Value, rhs: Value) -> Bool {
         lhs.rawValue < rhs.rawValue
+    }
+    
+    static func == (lhs: Value, rhs: Value) -> Bool {
+        lhs.rawValue == rhs.rawValue
     }
 }
 
@@ -35,5 +43,12 @@ final class CardTests: XCTestCase {
         let kingOfSpades = Card(value: .king, suit: .spades)
         
         XCTAssert(aceOfSpades > kingOfSpades)
+    }
+    
+    func test_equality_aceOfSpadesEqualsAceOfHearts() throws {
+        let aceOfSpades = Card(value: .ace, suit: .spades)
+        let aceOfHearts = Card(value: .ace, suit: .hearts)
+        
+        XCTAssertEqual(aceOfSpades, aceOfHearts)
     }
 }

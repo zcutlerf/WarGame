@@ -24,9 +24,13 @@ struct Card: Comparable, CustomStringConvertible {
     }
 }
 
-enum Value: Int, Comparable, CustomStringConvertible, CaseIterable {
+enum Value: Int, Comparable, CustomStringConvertible, CaseIterable, ExpressibleByIntegerLiteral {
     case two = 2
     case three, four, five, six, seven, eight, nine, ten, jack, queen, king, ace
+    
+    init(integerLiteral value: Int) {
+        self = Value(rawValue: value)!
+    }
     
     static func < (lhs: Value, rhs: Value) -> Bool {
         lhs.rawValue < rhs.rawValue
@@ -86,6 +90,11 @@ enum Suit: String, CustomStringConvertible, CaseIterable {
 }
 
 final class CardTests: XCTestCase {
+    func test_init_valueExpressibleAsInt() throws {
+        let twoOfClubs = Card(value: 2, suit: .clubs)
+        XCTAssert(twoOfClubs.value == .two)
+    }
+    
     func test_greaterThan_aceOfSpadesIsGreaterThanKingOfSpades() throws {
         let aceOfSpades = Card(value: .ace, suit: .spades)
         let kingOfSpades = Card(value: .king, suit: .spades)

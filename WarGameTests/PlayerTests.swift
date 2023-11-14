@@ -23,6 +23,10 @@ struct Player {
     var hasLost: Bool {
         score == 0
     }
+    
+    func play() -> Card {
+        hand.first!
+    }
 }
 
 final class PlayerTests: XCTestCase {
@@ -41,6 +45,13 @@ final class PlayerTests: XCTestCase {
     func test_hasLost_falseAtInitialization() throws {
         let player = onePlayerFromTwoPlayerGame()
         XCTAssertFalse(player.hasLost)
+    }
+    
+    func test_play_playsFirstCardInHand() throws {
+        let player = onePlayerFromTwoPlayerGame()
+        let card = player.play()
+        let expectedCard = player.hand.first!
+        XCTAssertEqual(card, expectedCard)
     }
     
     private func onePlayerFromTwoPlayerGame() -> Player {
